@@ -11,7 +11,8 @@
 ## Part A. HelloYou from the Raspberry Pi
 
 **a. Link to a video of your HelloYou sketch running.**
-[helloYou](https://www.youtube.com/watch?v=MUhS21ISW10)
+
+![helloYou](https://www.youtube.com/watch?v=MUhS21ISW10)
 
 ## Part B. Web Camera
 
