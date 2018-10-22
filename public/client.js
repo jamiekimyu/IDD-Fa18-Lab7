@@ -29,6 +29,11 @@ function takePicture(){
   socket.emit('takePicture');
 }
 
+//-- Addition: Forward the `Meme_ify` button-press to the webserver.
+function Meme_ify(){
+  socket.emit('Meme_ify');
+}
+
 //-- Addition: This function receives the new image name and applies it to html element.
 
 socket.on('newPicture', function(msg) {

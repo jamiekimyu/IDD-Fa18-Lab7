@@ -28,6 +28,9 @@ var SerialPort = require('serialport'); // serial library
 var Readline = SerialPort.parsers.Readline; // read serial data as lines
 //-- Addition:
 var NodeWebcam = require( "node-webcam" );// load the webcam module
+var caption = require('caption');
+var path = require('path');
+var imageName = '';//global variable for image name
 
 //---------------------- WEBAPP SERVER SETUP ---------------------------------//
 // use express to create the simple webapp
@@ -88,6 +91,16 @@ serial.pipe(parser);
 parser.on('data', function(data) {
   console.log('Data:', data);
   io.emit('server-msg', data);
+
+//addition begin
+  var imageName = new Date().toString().replace(/[&\/\\#,+()$~%.'":*?<>{}\s-]/g, '');
+  console.log('making a making a picture at'+ imageName);
+  NodeWebcam.capture('public/'+imageName, opts, function( err, data ) {
+  io.emit('newPicture',(imageName+'.jpg')); ///Lastly, the new name is send to the client web browser.
+  /// The browser will take this new name and load the picture from the public folder.
+  });
+//addition end
+
 });
 //----------------------------------------------------------------------------//
 
@@ -115,7 +128,7 @@ io.on('connect', function(socket) {
     /// First, we create a name for the new picture.
     /// The .replace() function removes all special characters from the date.
     /// This way we can use it as the filename.
-    var imageName = new Date().toString().replace(/[&\/\\#,+()$~%.'":*?<>{}\s-]/g, '');
+    imageName = new Date().toString().replace(/[&\/\\#,+()$~%.'":*?<>{}\s-]/g, '');
 
     console.log('making a making a picture at'+ imageName); // Second, the name is logged to the console.
 
@@ -130,5 +143,28 @@ io.on('connect', function(socket) {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
+
+  //-- Addition: This function is called when the client clicks on the `Meme_ify` button.
+  socket.on('Meme_ify', function(){
+    console.log('meme test');
+
+    originalFile = path.resolve('./public/'+imageName+'.jpg')
+    saveToFile = path.resolve('./public/'+imageName+'_meme.jpg')
+    console.log('orig',originalFile)
+    console.log('saved',saveToFile)
+
+    caption.path(originalFile,{
+      caption: 'Meme It!',
+      outputFile: saveToFile},
+      function(err, filename){
+        if (!err) {
+              console.log('memed');
+              io.emit('newPicture',imageName+'_resized.jpg');
+            } else {
+              console.log(err)
+            }
+    });
+  });
+
 });
 //----------------------------------------------------------------------------//
