@@ -59,7 +59,11 @@ I used the 'diff' function to examine the differences between the 2 files. The l
 
 I used the 'caption' node.js library to create memes from images that were captured using the webcam. To do this I added an extra button to the html that was linked to an extra function I created 'meme_ify'. This function linked to the backend on the raspberry pi to call the caption library and add a caption to a previously taken image. Unfortunately, because I structured the library to be called on the backend that meant that I needed to download all dependencies for the library on the backend as well. The 'caption' library depends on 'imagemagick' and 'ghostscript' which I was unfortunately unable to download since I did not have permissions to install that on the pi. 
 
+**Later Edit** With some help from JD(thank you!), I was able to install 'imagemagick' on the backend using the keyword 'sudo' to give me permissions to download and open certain folders on the pi. 
+
 **b. Upload a video of your working modified project**
 
 [Here is a video documenting the unsuccessful attempt + the error log](https://www.youtube.com/watch?v=08Vb-C3e1XU)
+
+[Video of successful attempt](https://www.youtube.com/watch?v=PrZ_JkwnpDg)
 
