@@ -159,7 +159,7 @@ io.on('connect', function(socket) {
       function(err, filename){
         if (!err) {
               console.log('memed');
-              io.emit('newPicture',imageName+'_resized.jpg');
+              io.emit('newPicture',imageName+'_meme.jpg');
             } else {
               console.log(err)
             }
